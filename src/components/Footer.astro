@@ -1,0 +1,27 @@
+---
+const currentYear = new Date().getFullYear();
+const currentMonth = new Date().getMonth() + 1;
+const currentDay = new Date().getDate();
+---
+
+<footer>
+  &copy; 0{currentDay} / {currentMonth} / {currentYear} - Las gorditas de la alborada
+  <small class="byline">🚀🚀 🚀</small>
+</footer>
+<style>
+  footer {
+    text-align: center;
+    padding-top: 8rem;
+    padding-right: 2rem;
+    padding-bottom: 4rem;
+    padding-left: 2rem;
+  }
+
+  .byline {
+    display: block;
+    margin-top: 1rem;
+    color: var(--t-subdue);
+    font-size: var(--f-d2);
+    text-transform: uppercase;
+  }
+</style>

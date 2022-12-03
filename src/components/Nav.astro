@@ -1,0 +1,100 @@
+---
+import { WhatsappIcon } from "./svg/WhatsappIcon";
+import { InstagramIcon } from "./svg/InstagramIcon";
+
+const INTERNLINKS = [
+  {
+    href: "/",
+    label: "Inicio",
+    className: "link",
+  },
+  {
+    href: "/productos/",
+    label: "productos",
+    className: "link",
+  },
+	{
+		href: "/opinion/",
+		label: "opinión",
+		className: "link",
+	},
+];
+---
+
+<nav>
+  {
+    INTERNLINKS.map(({ href, label, className }: any) => (
+      <a class={className} href={href}>
+        {label}
+      </a>
+    ))
+  }
+  <div class="socials">
+    <a class="social" href="https://wa.link/a8tzss">
+      <WhatsappIcon className="socialIcon" />
+    </a>
+    <a class="social" href="https://www.instagram.com/john_rodriguez73/">
+      <InstagramIcon className="socialIcon" />
+    </a>
+  </div>
+</nav>
+
+<style>
+  nav {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem;
+  }
+
+  .link {
+    color: var(--t-subdue);
+    display: block;
+    text-decoration: none;
+    font-size: var(--f-d1);
+    text-transform: uppercase;
+    padding-top: 0.75em;
+    padding-bottom: 0.75em;
+  }
+
+  .link:hover,
+  .link:focus {
+    color: var(--t-active);
+  }
+
+  .monogram {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 5em;
+    height: 2em;
+    margin-right: 0.5rem;
+    color: var(--c-black);
+    font-weight: 900;
+    letter-spacing: -0.125rem;
+    border: 3px solid currentColor;
+    border-radius: 50%;
+  }
+
+  .socials {
+    display: flex;
+    gap: 0.75em;
+    margin-left: auto;
+  }
+
+  .social {
+    display: block;
+  }
+
+  .socialIcon {
+    display: block;
+    width: 1.7rem;
+    height: 1.8rem;
+    fill: var(--t-subdue);
+    transition: fill linear 150ms;
+  }
+
+  /*.socialIcon:hover {
+    fill: var(--t-active);
+  }*/
+</style>
