@@ -16,7 +16,7 @@ const { frontmatter, /*url*/ } = Astro.props.project;
 	<div class="descCard">
 		<p class="desc">{frontmatter.description}</p>
 		<div class="tags">
-			Tagged:
+			Etiquetas:
 			{
 				frontmatter.tags.map((t) => (
 					<div class="tag" data-tag={t}>
@@ -25,9 +25,6 @@ const { frontmatter, /*url*/ } = Astro.props.project;
 				))
 			}
 		</div>
-		<!--<a class="link" href={url}>
-			<span class="linkInner">View</span>
-		</a>-->
 	</div>
 </div>
 
@@ -50,7 +47,7 @@ const { frontmatter, /*url*/ } = Astro.props.project;
 		margin: 0;
 		color: white;
 		flex-direction: column;
-		font-size: var(--f-u4);
+		font-size: var(--f-u3);
 		font-weight: 900;
 		text-transform: uppercase;
 		letter-spacing: 0.0625em;
@@ -59,8 +56,8 @@ const { frontmatter, /*url*/ } = Astro.props.project;
 	.titleCard {
 		position: relative;
 		background-size: cover;
-		background-position: 50% 100%;
-		padding-top: 37.5%;
+		background-position: center;
+		padding-top: 50%;
 	}
 
 	.descCard {
@@ -68,7 +65,8 @@ const { frontmatter, /*url*/ } = Astro.props.project;
 	}
 
 	.desc {
-		font-size: var(--f-u1);
+		text-align: center;
+		font-size: var(--f-d1);
 		line-height: 1.4;
 		margin-top: 0em;
 		margin-bottom: 1em;
