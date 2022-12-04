@@ -13,11 +13,11 @@ const INTERNLINKS = [
     label: "productos",
     className: "link",
   },
-	{
-		href: "/opinion/",
-		label: "opinión",
-		className: "link",
-	},
+  {
+    href: "/opinion/",
+    label: "opinión",
+    className: "link",
+  },
 ];
 ---
 
@@ -41,10 +41,22 @@ const INTERNLINKS = [
 
 <style>
   nav {
+    position: fixed;
+    width: 95%;
+    top:0;
+    height: 30px;
+    background-color: #fff;
+    z-index: 100;
     display: flex;
     gap: 1rem;
     align-items: center;
     padding: 1rem;
+  }
+  @media(min-width: 680px) {
+    nav {
+      width: 97%;
+      height: 50px;
+    }
   }
 
   .link {
@@ -92,6 +104,14 @@ const INTERNLINKS = [
     height: 1.8rem;
     fill: var(--t-subdue);
     transition: fill linear 150ms;
+  }
+  .socialIcon:hover,
+  .socialIcon:focus {
+    transform: scale(1.2);
+  }
+
+  .socialIcon:active {
+    transform: scale(.8);
   }
 
   /*.socialIcon:hover {

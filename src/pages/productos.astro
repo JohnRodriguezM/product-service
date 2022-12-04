@@ -11,7 +11,7 @@ const projects = (await Astro.glob<Project>('./project/**/*.md'))
 		(a, b) =>
 			new Date(b.frontmatter.publishDate).valueOf() - new Date(a.frontmatter.publishDate).valueOf()
 	);
-	let product = projects.slice(0,2)
+	let product = projects.slice(0,6)
 ---
 
 <html lang="en">
@@ -22,11 +22,12 @@ const projects = (await Astro.glob<Project>('./project/**/*.md'))
 		/>
 		<style>
 			.grid {
-				max-width: 500px;
 				display: grid;
 				grid-gap: 3rem;
 			}
 			.title {
+				
+				font-weight: bold;
 				text-align: center;
 				font-size: 1.7rem;
 				margin-top: 2rem;

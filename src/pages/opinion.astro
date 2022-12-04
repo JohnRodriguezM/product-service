@@ -3,8 +3,7 @@ import MainHead from "../components/MainHead.astro";
 import Footer from "../components/Footer.astro";
 import Nav from "../components/Nav.astro";
 
-
-
+import { FormOpinion } from "../components/FormOpinion/FormOpinion";
 ---
 
 <html lang="en">
@@ -37,7 +36,6 @@ import Nav from "../components/Nav.astro";
   <body>
     <Nav />
     <div class="wrapper">
-      <h3>Déjanos saber tú opinión</h3>
       <!--poner una img relacionada con la opinión de los usarios 
       <div class="heroImg">
         <img
@@ -47,10 +45,9 @@ import Nav from "../components/Nav.astro";
         />
       </div> s-->
       <div class="bio wrapper">
-        <p>
-          Poner formulario de opinión
-        </p>
-        <!--formulario de calificación del producto -->
+        <div>
+          <FormOpinion client:only="react" />
+        </div>
       </div>
     </div>
     <Footer />
