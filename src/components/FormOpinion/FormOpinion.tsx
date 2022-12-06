@@ -54,12 +54,13 @@ export const FormOpinion = () => {
   return (
     <div
       style={{
-        width: "100%",
+        margin: "0 auto",
+        textAlign: "center",
+        /*width: "100%",
         height: "100%",
         display: "flex",
-        justifyContent: "center",
+        justifyContent: "center",*/
         alignItems: "center",
-        margin: "0 auto",
       }}
     >
       <br />
@@ -67,8 +68,9 @@ export const FormOpinion = () => {
         action=""
         onSubmit={submit}
         style={{
+          /*margin: "0 auto",*/
           marginTop: "50px",
-          textAlign: "center",
+          /*textAlign: "center",*/
         }}
       >
         <label
