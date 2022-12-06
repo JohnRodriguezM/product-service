@@ -52,29 +52,18 @@ export const FormOpinion = () => {
   };
 
   return (
-    <div
-      style={{
-        margin: "0 auto",
-        textAlign: "center",
-        /*width: "100%",
-        height: "100%",
-        display: "flex",
-        justifyContent: "center",*/
-        alignItems: "center",
-      }}
-    >
+    <div>
       <br />
       <form
         action=""
         onSubmit={submit}
         style={{
-          /*margin: "0 auto",*/
+          width: "100%",
           marginTop: "50px",
-          /*textAlign: "center",*/
         }}
       >
         <label
-          className="block text-gray-700 text-sm font-bold mb-2"
+          className=" block text-gray-700 text-sm font-bold mb-2 container w-full"
           htmlFor="producto"
         >
           Producto que consumiste
@@ -96,7 +85,7 @@ export const FormOpinion = () => {
         </select>
         <br />
         <label
-          className="block text-gray-700 text-sm font-bold mb-2"
+          className=" block text-gray-700 text-sm font-bold mb-2 container w-full"
           htmlFor="calificacion"
         >
           Calificacion
@@ -115,12 +104,11 @@ export const FormOpinion = () => {
           <option value="5">5</option>
         </select>
         <br />
-        <label
-          className="block text-gray-700 text-sm font-bold mb-2"
-          htmlFor="comentario"
-        >
-          Comentario y sugerencia de nuevo producto
-        </label>
+        <label  className="
+        
+        block  text-gray-700 text-sm font-bold mb-2 container w-full" htmlFor="comentario">Comentario y sugerencia de nuevo producto</label>
+      
+       
         <textarea
           onChange={handleChange}
           name="comentario"
