@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConnect";
 
 interface FormProps {
@@ -104,11 +104,15 @@ export const FormOpinion = () => {
           <option value="5">5</option>
         </select>
         <br />
-        <label  className="
+        <label
+          className="
         
-        block  text-gray-700 text-sm font-bold mb-2 container w-full" htmlFor="comentario">Comentario y sugerencia de nuevo producto</label>
-      
-       
+        block  text-gray-700 text-sm font-bold mb-2 container w-full"
+          htmlFor="comentario"
+        >
+          Comentario y sugerencia de nuevo producto
+        </label>
+
         <textarea
           onChange={handleChange}
           name="comentario"
