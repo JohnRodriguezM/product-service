@@ -1,20 +1,30 @@
 import { useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConnect";
+import Box from "@mui/material/Box";
+import Rating from "@mui/material/Rating";
+import Typography from "@mui/material/Typography";
+import "./form.css";
 
 interface FormProps {
   producto: string;
   calificacion: string;
   comentario: string;
 }
-const initialValues = {
+/*const initialValues = {
   producto: "",
   calificacion: "",
   comentario: "",
+  servicio: value,
 };
-
+*/
 export const FormOpinion = () => {
-  const [form, setForm] = useState<FormProps>(initialValues);
+  const [value, setValue] = useState<number | null>(2);
+  const [form, setForm] = useState<FormProps>({
+    producto: "",
+    calificacion: "",
+    comentario: "",
+  });
 
   const handleChange = (e: any) => {
     return setForm({
@@ -33,9 +43,14 @@ export const FormOpinion = () => {
         producto,
         calificacion,
         comentario,
+        servicio: value,
       });
       console.log("Document written with ID: ", docRef.id);
-      setForm(initialValues);
+      setForm({
+        producto: "",
+        calificacion: "",
+        comentario: "",
+      });
     } catch (error) {
       console.log(error);
     } finally {
@@ -48,11 +63,12 @@ export const FormOpinion = () => {
       producto: form.producto,
       calificacion: form.calificacion,
       comentario: form.comentario,
+      servicio: value,
     });
   };
 
   return (
-    <div>
+    <div className="form">
       <br />
       <form
         action=""
@@ -63,7 +79,7 @@ export const FormOpinion = () => {
         }}
       >
         <label
-          className=" block text-gray-700 text-sm font-bold mb-2 container w-full"
+          className=" block ml-2 text-gray-700 text-sm font-bold mb-2 container w-full"
           htmlFor="producto"
         >
           Producto que consumiste
@@ -73,7 +89,7 @@ export const FormOpinion = () => {
           onChange={handleChange}
           defaultValue={form.producto}
           id="calificacion"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500"
         >
           <option selected>Producto</option>
           <option value="queso">Arepa con queso</option>
@@ -85,16 +101,16 @@ export const FormOpinion = () => {
         </select>
         <br />
         <label
-          className=" block text-gray-700 text-sm font-bold mb-2 container w-full"
+          className=" block ml-2 text-gray-700 text-sm font-bold mb-2 container w-full"
           htmlFor="calificacion"
         >
-          Calificacion
+          Calificacion del producto
         </label>
         <select
           name="calificacion"
           defaultValue={form.calificacion}
           onChange={handleChange}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className=" border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500"
         >
           <option>De 1 a 5</option>
           <option value="1">1</option>
@@ -105,9 +121,7 @@ export const FormOpinion = () => {
         </select>
         <br />
         <label
-          className="
-        
-        block  text-gray-700 text-sm font-bold mb-2 container w-full"
+          className=" block ml-2 text-gray-700 text-sm font-bold mb-2 container w-full"
           htmlFor="comentario"
         >
           Comentario y sugerencia de nuevo producto
@@ -119,9 +133,25 @@ export const FormOpinion = () => {
           cols={30}
           rows={10}
           defaultValue={form.comentario}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500"
           id=""
         ></textarea>
+        <Box
+          sx={{
+            "& > legend": { mt: 1 },
+          }}
+        >
+          <Typography component="legend">
+            Calificación de nuestro servicio
+          </Typography>
+          <Rating
+            name="simple-controlled"
+            value={value}
+            onChange={(event, newValue) => {
+              setValue(newValue);
+            }}
+          />
+        </Box>
         <button
           className="mt-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded"
           type="submit"
@@ -129,6 +159,8 @@ export const FormOpinion = () => {
           Enviar
         </button>
       </form>
+
+      <div></div>
     </div>
   );
 };
