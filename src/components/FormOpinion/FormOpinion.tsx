@@ -6,18 +6,11 @@ import Rating from "@mui/material/Rating";
 import Typography from "@mui/material/Typography";
 import "./form.css";
 
-interface FormProps {
-  producto: string;
-  calificacion: string;
-  comentario: string;
-}
-/*const initialValues = {
-  producto: "",
-  calificacion: "",
-  comentario: "",
-  servicio: value,
-};
-*/
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import type { FormProps } from "./type";
+
 export const FormOpinion = () => {
   const [value, setValue] = useState<number | null>(2);
   const [form, setForm] = useState<FormProps>({
@@ -32,6 +25,7 @@ export const FormOpinion = () => {
       [e.target.name]: e.target.value,
     });
   };
+  const notify = () => toast("Gracias por tu opinión, vuelve pronto!");
 
   const handleSubmit = async ({
     producto,
@@ -65,10 +59,28 @@ export const FormOpinion = () => {
       comentario: form.comentario,
       servicio: value,
     });
+    notify();
+    setForm({
+      producto: "",
+      calificacion: "",
+      comentario: "",
+    });
   };
 
   return (
     <div className="form">
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+
       <br />
       <form
         action=""
@@ -159,7 +171,6 @@ export const FormOpinion = () => {
           Enviar
         </button>
       </form>
-
       <div></div>
     </div>
   );
