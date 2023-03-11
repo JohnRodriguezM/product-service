@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConnect";
 import Box from "@mui/material/Box";
@@ -10,14 +10,24 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import type { FormProps } from "./type";
+import { Dvr } from "@mui/icons-material";
 
 export const FormOpinion = () => {
   const [value, setValue] = useState<number | null>(2);
+
+
   const [form, setForm] = useState<FormProps>({
     producto: "",
     calificacion: "",
     comentario: "",
   });
+
+  const [new, setNew] = useState({
+    producto: "",
+    calificacion: "",
+    comentario: "",
+  })
+
 
   const handleChange = (e: any) => {
     return setForm({
@@ -82,6 +92,9 @@ export const FormOpinion = () => {
       />
 
       <br />
+
+      {/*crear un loader que envuelva la aparición de un componente*/}
+
       <form
         action=""
         onSubmit={submit}
@@ -90,28 +103,78 @@ export const FormOpinion = () => {
           marginTop: "50px",
         }}
       >
-        <label
-          className=" block ml-2 text-gray-700 text-sm font-bold mb-2 container w-full"
-          htmlFor="producto"
-        >
-          Producto que consumiste
-        </label>
-        <select
-          name="producto"
-          onChange={handleChange}
-          defaultValue={form.producto}
-          id="calificacion"
-          className="border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        >
-          <option selected>Producto</option>
-          <option value="queso">Arepa con queso</option>
-          <option value="pollo">Arepa con pollo</option>
-          <option value="carne">Arepa con carne</option>
-          <option value="huevo">Arepa con huevo</option>
-          <option value="jamón">Arepa con jamón</option>
-          <option value="otro producto">otro</option>
-        </select>
+        {form.producto === "otro producto" ? (
+          <div>
+            <label
+              className=" block ml-2 text-red-600 text-sm font-bold mb-2 container w-full"
+              htmlFor="producto"
+            >
+              Especifica el producto
+            </label>
+
+            <input
+              type="text"
+              name="producto"
+              placeholder="Producto"
+              required
+              //onChange={handleChange}
+              defaultValue={""}
+              className="border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            />
+            <button
+              className="bg-blue-500 mt-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              onClick={() => {
+                setForm({
+                  producto: "",
+                  calificacion: "",
+                  comentario: "",
+                });
+              }}
+            >
+              Guardar elección{" "}
+            </button>
+
+            <button
+              className="bg-blue-500 mt-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              onClick={() => {
+                setForm({
+                  producto: "",
+                  calificacion: "",
+                  comentario: "",
+                });
+              }}
+            >
+              Elegir nuevamente
+            </button>
+          </div>
+        ) : (
+          <>
+            <label
+              className=" block ml-2 text-gray-700 text-sm font-bold mb-2 container w-full"
+              htmlFor="producto"
+            >
+              Producto que consumiste
+            </label>
+            <select
+              name="producto"
+              onChange={handleChange}
+              defaultValue={form.producto}
+              id="calificacion"
+              className="border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            >
+              <option selected>Producto</option>
+              <option value="queso">Arepa con queso</option>
+              <option value="pollo">Arepa con pollo</option>
+              <option value="carne">Arepa con carne</option>
+              <option value="huevo">Arepa con huevo</option>
+              <option value="jamón">Arepa con jamón</option>
+              <option value="otro producto">otro</option>
+            </select>
+          </>
+        )}
+
         <br />
+
         <label
           className=" block ml-2 text-gray-700 text-sm font-bold mb-2 container w-full"
           htmlFor="calificacion"
