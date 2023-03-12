@@ -1,20 +1,16 @@
-import { useState, useEffect } from "react";
-import { collection, addDoc } from "firebase/firestore";
-import { db } from "../../firebase/firebaseConnect";
+import { useState } from "react";
+
 import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
 import Typography from "@mui/material/Typography";
 import "./form.css";
+import { submit } from "./utils/utils";
 
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
-import type { FormProps } from "./type";
-import { Dvr } from "@mui/icons-material";
+import { ToastContainer } from "react-toastify";
+import type { FormProps } from "./types/type";
 
 export const FormOpinion = () => {
-  const [value, setValue] = useState<number | null>(2);
-
+  const [service, setService] = useState<number>(2);
 
   const [form, setForm] = useState<FormProps>({
     producto: "",
@@ -22,58 +18,12 @@ export const FormOpinion = () => {
     comentario: "",
   });
 
-  const [new, setNew] = useState({
-    producto: "",
-    calificacion: "",
-    comentario: "",
-  })
-
+  const [element, setElement] = useState("");
 
   const handleChange = (e: any) => {
     return setForm({
       ...form,
       [e.target.name]: e.target.value,
-    });
-  };
-  const notify = () => toast("Gracias por tu opinión, vuelve pronto!");
-
-  const handleSubmit = async ({
-    producto,
-    calificacion,
-    comentario,
-  }: any): Promise<any> => {
-    try {
-      const docRef = await addDoc(collection(db, "opinions"), {
-        producto,
-        calificacion,
-        comentario,
-        servicio: value,
-      });
-      console.log("Document written with ID: ", docRef.id);
-      setForm({
-        producto: "",
-        calificacion: "",
-        comentario: "",
-      });
-    } catch (error) {
-      console.log(error);
-    } finally {
-      console.log("final");
-    }
-  };
-  const submit = (e: any) => {
-    e.preventDefault();
-    handleSubmit({
-      producto: form.producto,
-      calificacion: form.calificacion,
-      comentario: form.comentario,
-      servicio: value,
-    });
-    notify();
-    setForm({
-      producto: "",
-      calificacion: "",
-      comentario: "",
     });
   };
 
@@ -93,11 +43,9 @@ export const FormOpinion = () => {
 
       <br />
 
-      {/*crear un loader que envuelva la aparición de un componente*/}
-
       <form
         action=""
-        onSubmit={submit}
+        onSubmit={(e) => submit(e, form, element, service)}
         style={{
           width: "100%",
           marginTop: "50px",
@@ -117,7 +65,7 @@ export const FormOpinion = () => {
               name="producto"
               placeholder="Producto"
               required
-              //onChange={handleChange}
+              onChange={(e) => setElement(e.target.value)}
               defaultValue={""}
               className="border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
@@ -131,20 +79,7 @@ export const FormOpinion = () => {
                 });
               }}
             >
-              Guardar elección{" "}
-            </button>
-
-            <button
-              className="bg-blue-500 mt-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              onClick={() => {
-                setForm({
-                  producto: "",
-                  calificacion: "",
-                  comentario: "",
-                });
-              }}
-            >
-              Elegir nuevamente
+              Volver
             </button>
           </div>
         ) : (
@@ -158,7 +93,7 @@ export const FormOpinion = () => {
             <select
               name="producto"
               onChange={handleChange}
-              defaultValue={form.producto}
+              defaultValue={"arepa"}
               id="calificacion"
               className="border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
@@ -221,9 +156,9 @@ export const FormOpinion = () => {
           </Typography>
           <Rating
             name="simple-controlled"
-            value={value}
-            onChange={(event, newValue) => {
-              setValue(newValue);
+            defaultValue={service}
+            onChange={(event, newValue: any) => {
+              setService(newValue);
             }}
           />
         </Box>

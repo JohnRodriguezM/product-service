@@ -1,5 +1,5 @@
 export interface FormProps {
-  producto: string;
+  producto: string | null;
   calificacion: string;
   comentario: string;
 }
