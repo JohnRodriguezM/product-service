@@ -28,8 +28,9 @@ const handleSubmit = async ({
 };
 
 
-export const submit = (e: any, form: any, element: any, service: any,) => {
+export const submit = (e: any, form: any, service: any, element: any) => {
   const { producto, calificacion, comentario } = form;
+  console.log('from', form)
   e.preventDefault();
   e.target.reset();
   handleSubmit({

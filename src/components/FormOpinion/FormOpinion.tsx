@@ -7,24 +7,31 @@ import "./form.css";
 import { submit } from "./utils/utils";
 
 import { ToastContainer } from "react-toastify";
-import type { FormProps } from "./types/type";
+//import type { FormProps } from "./types/type";
+
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setForm,
+  setService,
+  setElement,
+  element,
+  service,
+  form,
+} from "./slice";
 
 export const FormOpinion = () => {
-  const [service, setService] = useState<number>(2);
-
-  const [form, setForm] = useState<FormProps>({
-    producto: "",
-    calificacion: "",
-    comentario: "",
-  });
-
-  const [element, setElement] = useState("");
+  const dispatch = useDispatch();
+  const formSelector = useSelector(form);
+  console.log(formSelector)
+  const serviceSelector = useSelector(service);
+  console.log(serviceSelector)
+  const elementSelector = useSelector(element);
+  console.log(elementSelector)
 
   const handleChange = (e: any) => {
-    return setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
+    return dispatch(
+      setForm({ ...formSelector, [e.target.name]: e.target.value })
+    );
   };
 
   return (
@@ -42,16 +49,15 @@ export const FormOpinion = () => {
       />
 
       <br />
-
       <form
         action=""
-        onSubmit={(e) => submit(e, form, element, service)}
+        onSubmit={(e) => submit(e, formSelector, serviceSelector,elementSelector)}
         style={{
           width: "100%",
           marginTop: "50px",
         }}
       >
-        {form.producto === "otro producto" ? (
+        {formSelector.producto === "otro producto" ? (
           <div>
             <label
               className=" block ml-2 text-red-600 text-sm font-bold mb-2 container w-full"
@@ -65,18 +71,21 @@ export const FormOpinion = () => {
               name="producto"
               placeholder="Producto"
               required
-              onChange={(e) => setElement(e.target.value)}
+              onChange={(e) => dispatch(setElement(e.target.value))}
               defaultValue={""}
               className="border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
             <button
               className="bg-blue-500 mt-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
               onClick={() => {
-                setForm({
+
+                dispatch(setForm({
                   producto: "",
                   calificacion: "",
                   comentario: "",
-                });
+                }));
+
+               
               }}
             >
               Volver
@@ -118,7 +127,7 @@ export const FormOpinion = () => {
         </label>
         <select
           name="calificacion"
-          defaultValue={form.calificacion}
+          defaultValue={formSelector.calificacion}
           onChange={handleChange}
           className=" border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500"
         >
@@ -142,7 +151,7 @@ export const FormOpinion = () => {
           name="comentario"
           cols={30}
           rows={10}
-          defaultValue={form.comentario}
+          defaultValue={formSelector.comentario}
           className="border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500"
           id=""
         ></textarea>
@@ -156,9 +165,9 @@ export const FormOpinion = () => {
           </Typography>
           <Rating
             name="simple-controlled"
-            defaultValue={service}
+            defaultValue={serviceSelector}
             onChange={(event, newValue: any) => {
-              setService(newValue);
+              dispatch(setService(newValue));
             }}
           />
         </Box>
