@@ -25,7 +25,7 @@ export const FormOpinion = () => {
 
   return (
     <div className="form">
-      <h1 className="title">Danos tú opinión</h1>
+      
 
       <ToastContainer
         position="top-center"
@@ -45,7 +45,7 @@ export const FormOpinion = () => {
         onSubmit={(e) => submit(e, formSelector)}
         style={{
           width: "100%",
-          marginTop: "20px",
+          marginTop: "50px",
         }}
       >
         {formSelector.producto === "otro producto" ? (
