@@ -5,10 +5,11 @@ client: Self
 publishDate: 2020-03-04 00:00:00
 img: https://www.cocinacaserayfacil.net/wp-content/uploads/2017/06/Arepa-de-pollo.jpg
 description: |
-  Valor: $5000 cop 🥳🫓
+  Precio: $5000 cop 🥳🫓
 tags:
-  - pollo
+  - Pollo
   - queso
   - maíz
+  - Casero
 ---
 

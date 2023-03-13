@@ -1,0 +1,20 @@
+.form{
+  margin: 4% auto;
+  text-align: center;
+  width: 80%;
+  max-width: 350px;
+  padding-right: 5%;
+  background-color: #fff; 
+}
+
+.title {
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.7rem;
+  margin-top: 4.5rem;
+}
+@media (min-width: 768px) {
+  .title {
+    font-size: 2rem;
+  }
+}

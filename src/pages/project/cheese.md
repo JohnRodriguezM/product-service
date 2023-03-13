@@ -9,4 +9,6 @@ description: |
 tags:
   - Cocina
   - Experiencia
+  - Expresion
+  - Natural
 ---

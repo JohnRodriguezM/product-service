@@ -6,9 +6,10 @@ const initialState = {
     producto: '',
     calificacion: 0,
     comentario: '',
+    service: 2,
+    otherProduct: '',
   },
-  service: 2,
-  element: 'hi',
+
 };
 
 
@@ -22,27 +23,28 @@ export const slice = createSlice({
         producto: action.payload.producto,
         calificacion: action.payload.calificacion,
         comentario: action.payload.comentario,
+        service : action.payload.service,
+        otherProduct: action.payload.otherProduct,
       };
-      state.service = 2;
     },
-    setService : function(state, action) {
+   /* setService : function(state, action) {
       state.form = {
         ...state.form,
       };
       state.service = action.payload;
-    },
-    setElement : function(state, action) {
+    },*/
+    /*setElement : function(state, action) {
       state.element = action.payload;
-    },
+    },*/
   },
 });
 
-export const { setForm, setService, setElement } = slice.actions;
+export const { setForm, /*setService, setElemen*/ } = slice.actions;
 
 
 export const form = (state:any) => state.slice.form;
-export const service = (state:any) => state.slice.service;
-export const element = (state:any) => state.slice.element;
+/*export const service = (state:any) => state.slice.service;
+export const element = (state:any) => state.slice.element;*/
 
 
 

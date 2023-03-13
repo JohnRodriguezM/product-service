@@ -3,30 +3,19 @@ import { useState } from "react";
 import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
 import Typography from "@mui/material/Typography";
-import "./form.css";
+import "./css/form.css";
 import { submit } from "./utils/utils";
 
 import { ToastContainer } from "react-toastify";
 //import type { FormProps } from "./types/type";
 
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setForm,
-  setService,
-  setElement,
-  element,
-  service,
-  form,
-} from "./slice";
+import { InputRepeat } from "./../atoms/InputRepeat";
+import { setForm, form } from "./slice";
 
 export const FormOpinion = () => {
   const dispatch = useDispatch();
   const formSelector = useSelector(form);
-  console.log(formSelector)
-  const serviceSelector = useSelector(service);
-  console.log(serviceSelector)
-  const elementSelector = useSelector(element);
-  console.log(elementSelector)
 
   const handleChange = (e: any) => {
     return dispatch(
@@ -36,6 +25,8 @@ export const FormOpinion = () => {
 
   return (
     <div className="form">
+      <h1 className="title">Danos tú opinión</h1>
+
       <ToastContainer
         position="top-center"
         autoClose={5000}
@@ -51,70 +42,52 @@ export const FormOpinion = () => {
       <br />
       <form
         action=""
-        onSubmit={(e) => submit(e, formSelector, serviceSelector,elementSelector)}
+        onSubmit={(e) => submit(e, formSelector)}
         style={{
           width: "100%",
-          marginTop: "50px",
+          marginTop: "20px",
         }}
       >
         {formSelector.producto === "otro producto" ? (
-          <div>
-            <label
-              className=" block ml-2 text-red-600 text-sm font-bold mb-2 container w-full"
-              htmlFor="producto"
-            >
-              Especifica el producto
-            </label>
-
-            <input
-              type="text"
-              name="producto"
-              placeholder="Producto"
-              required
-              onChange={(e) => dispatch(setElement(e.target.value))}
-              defaultValue={""}
-              className="border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            />
-            <button
-              className="bg-blue-500 mt-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              onClick={() => {
-
-                dispatch(setForm({
+          <InputRepeat
+            handleChange={(e: any) =>
+              dispatch(
+                setForm({
+                  ...formSelector,
+                  [e.target.name]: e.target.value,
+                })
+              )
+            }
+            handleButton={() => {
+              dispatch(
+                setForm({
                   producto: "",
                   calificacion: "",
                   comentario: "",
-                }));
-
-               
-              }}
-            >
-              Volver
-            </button>
-          </div>
+                })
+              );
+            }}
+            label="Especifica el producto"
+            btnValue="Volver"
+            name="otherProduct"
+            placeholder="Producto"
+            defaultValue={""}
+          />
         ) : (
-          <>
-            <label
-              className=" block ml-2 text-gray-700 text-sm font-bold mb-2 container w-full"
-              htmlFor="producto"
-            >
-              Producto que consumiste
-            </label>
-            <select
-              name="producto"
-              onChange={handleChange}
-              defaultValue={"arepa"}
-              id="calificacion"
-              className="border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            >
-              <option selected>Producto</option>
-              <option value="queso">Arepa con queso</option>
-              <option value="pollo">Arepa con pollo</option>
-              <option value="carne">Arepa con carne</option>
-              <option value="huevo">Arepa con huevo</option>
-              <option value="jamón">Arepa con jamón</option>
-              <option value="otro producto">otro</option>
-            </select>
-          </>
+          <InputRepeat
+            handleChange={handleChange}
+            label="Producto que consumiste"
+            name="producto"
+            placeholder="Producto"
+            defaultValue={"arepa"}
+            options={[
+              { value: "queso", label: "Arepa con queso" },
+              { value: "pollo", label: "Arepa con pollo" },
+              { value: "carne", label: "Arepa con carne" },
+              { value: "huevo", label: "Arepa con huevo" },
+              { value: "otro producto", label: "Otro producto" },
+            ]}
+          />
         )}
 
         <br />
@@ -165,9 +138,14 @@ export const FormOpinion = () => {
           </Typography>
           <Rating
             name="simple-controlled"
-            defaultValue={serviceSelector}
+            defaultValue={formSelector.service}
             onChange={(event, newValue: any) => {
-              dispatch(setService(newValue));
+              dispatch(
+                setForm({
+                  ...formSelector,
+                  service: newValue,
+                })
+              );
             }}
           />
         </Box>
