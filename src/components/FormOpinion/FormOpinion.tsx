@@ -1,32 +1,57 @@
-import { useState } from "react";
+import React, { useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
 import Typography from "@mui/material/Typography";
-import "./css/form.css";
-import { submit } from "./utils/utils";
-
 import { ToastContainer } from "react-toastify";
-//import type { FormProps } from "./types/type";
+import "react-toastify/dist/ReactToastify.css";
 
-import { useDispatch, useSelector } from "react-redux";
-import { InputRepeat } from "./../atoms/InputRepeat";
+import { submit } from "./utils/utils";
+import { InputRepeat } from "../atoms/InputRepeat";
 import { setForm, form } from "./slice";
+import "./css/form.css";
 
-export const FormOpinion = () => {
+interface FormState {
+  producto: string;
+  otherProduct?: string;
+  calificacion: string;
+  comentario: string;
+  service?: number;
+}
+
+export const FormOpinion: React.FC = () => {
   const dispatch = useDispatch();
-  const formSelector = useSelector(form);
+  const formSelector = useSelector(form) as FormState;
 
-  const handleChange = (e: any) => {
-    return dispatch(
-      setForm({ ...formSelector, [e.target.name]: e.target.value })
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+      const { name, value } = e.target;
+      dispatch(setForm({ ...formSelector, [name]: value }));
+    },
+    [dispatch, formSelector]
+  );
+
+  const handleServiceChange = useCallback(
+    (event: React.ChangeEvent<{}>, newValue: number | null) => {
+      dispatch(setForm({ ...formSelector, service: newValue ?? 0 }));
+    },
+    [dispatch, formSelector]
+  );
+
+  const handleResetProduct = useCallback(() => {
+    dispatch(
+      setForm({
+        producto: "",
+        calificacion: "",
+        comentario: "",
+        otherProduct: "",
+      })
     );
-  };
+  }, [dispatch]);
 
   return (
     <div className="form">
-      
-
       <ToastContainer
         position="top-center"
         autoClose={5000}
@@ -39,39 +64,22 @@ export const FormOpinion = () => {
         pauseOnHover
       />
 
-      <br />
       <form
-        action=""
         onSubmit={(e) => submit(e, formSelector)}
         style={{
           width: "100%",
-          marginTop: "50px",
+          marginTop: "7rem",
         }}
       >
         {formSelector.producto === "otro producto" ? (
           <InputRepeat
-            handleChange={(e: any) =>
-              dispatch(
-                setForm({
-                  ...formSelector,
-                  [e.target.name]: e.target.value,
-                })
-              )
-            }
-            handleButton={() => {
-              dispatch(
-                setForm({
-                  producto: "",
-                  calificacion: "",
-                  comentario: "",
-                })
-              );
-            }}
+            handleChange={handleChange}
+            handleButton={handleResetProduct}
             label="Especifica el producto"
             btnValue="Volver"
             name="otherProduct"
             placeholder="Producto"
-            defaultValue={""}
+            defaultValue=""
           />
         ) : (
           <InputRepeat
@@ -79,7 +87,7 @@ export const FormOpinion = () => {
             label="Producto que consumiste"
             name="producto"
             placeholder="Producto"
-            defaultValue={"arepa"}
+            defaultValue="arepa"
             options={[
               { value: "queso", label: "Arepa con queso" },
               { value: "pollo", label: "Arepa con pollo" },
@@ -90,63 +98,55 @@ export const FormOpinion = () => {
           />
         )}
 
-        <br />
+        <div className="form-group">
+          <label
+            htmlFor="calificacion"
+            className="block ml-2 text-gray-700 text-sm font-bold mb-2 container w-full"
+          >
+            Calificación del producto
+          </label>
+          <select
+            id="calificacion"
+            name="calificacion"
+            value={formSelector.calificacion}
+            onChange={handleChange}
+            className="border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          >
+            <option value="">De 1 a 5</option>
+            {[1, 2, 3, 4, 5].map((num) => (
+              <option key={num} value={num.toString()}>
+                {num}
+              </option>
+            ))}
+          </select>
+        </div>
 
-        <label
-          className=" block ml-2 text-gray-700 text-sm font-bold mb-2 container w-full"
-          htmlFor="calificacion"
-        >
-          Calificacion del producto
-        </label>
-        <select
-          name="calificacion"
-          defaultValue={formSelector.calificacion}
-          onChange={handleChange}
-          className=" border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        >
-          <option>De 1 a 5</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-        </select>
-        <br />
-        <label
-          className=" block ml-2 text-gray-700 text-sm font-bold mb-2 container w-full"
-          htmlFor="comentario"
-        >
-          Comentario y sugerencia de nuevo producto
-        </label>
+        <div className="form-group">
+          <label
+            htmlFor="comentario"
+            className="block ml-2 text-gray-700 text-sm font-bold mb-2 container w-full"
+          >
+            Comentario y sugerencia de nuevo producto
+          </label>
+          <textarea
+            id="comentario"
+            name="comentario"
+            value={formSelector.comentario}
+            onChange={handleChange}
+            className="border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            rows={10}
+            placeholder="Escribe tu comentario aquí..."
+          ></textarea>
+        </div>
 
-        <textarea
-          onChange={handleChange}
-          name="comentario"
-          cols={30}
-          rows={10}
-          defaultValue={formSelector.comentario}
-          className="border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          id=""
-        ></textarea>
-        <Box
-          sx={{
-            "& > legend": { mt: 1 },
-          }}
-        >
+        <Box sx={{ mt: 2 }}>
           <Typography component="legend">
             Calificación de nuestro servicio
           </Typography>
           <Rating
-            name="simple-controlled"
-            defaultValue={formSelector.service}
-            onChange={(event, newValue: any) => {
-              dispatch(
-                setForm({
-                  ...formSelector,
-                  service: newValue,
-                })
-              );
-            }}
+            name="service"
+            value={formSelector.service || 0}
+            onChange={handleServiceChange}
           />
         </Box>
         <button
@@ -156,7 +156,6 @@ export const FormOpinion = () => {
           Enviar
         </button>
       </form>
-      <div></div>
     </div>
   );
 };

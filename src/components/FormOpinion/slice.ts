@@ -27,24 +27,13 @@ export const slice = createSlice({
         otherProduct: action.payload.otherProduct,
       };
     },
-   /* setService : function(state, action) {
-      state.form = {
-        ...state.form,
-      };
-      state.service = action.payload;
-    },*/
-    /*setElement : function(state, action) {
-      state.element = action.payload;
-    },*/
   },
 });
 
-export const { setForm, /*setService, setElemen*/ } = slice.actions;
+export const { setForm } = slice.actions;
 
 
 export const form = (state:any) => state.slice.form;
-/*export const service = (state:any) => state.slice.service;
-export const element = (state:any) => state.slice.element;*/
 
 
 

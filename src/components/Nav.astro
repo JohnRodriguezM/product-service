@@ -30,10 +30,14 @@ const INTERNLINKS = [
     ))
   }
   <div class="socials">
-    <a class="social" href="https://wa.link/a8tzss">
+    <a class="social" href="https://wa.link/uj8irg" target="_blank">
       <WhatsappIcon className="socialIcon" />
     </a>
-    <a class="social" href="https://www.instagram.com/john_rodriguez73/">
+    <a
+      class="social"
+      href="https://www.instagram.com/_miss.arepas_/"
+      target="_blank"
+    >
       <InstagramIcon className="socialIcon" />
     </a>
   </div>
@@ -43,16 +47,16 @@ const INTERNLINKS = [
   nav {
     position: fixed;
     width: 95%;
-    top:0;
+    top: 0;
     height: 30px;
     background-color: #fff;
     z-index: 100;
     display: flex;
-    gap: .5rem;
+    gap: 0.5rem;
     align-items: center;
     padding: 1rem;
   }
-  @media(min-width: 680px) {
+  @media (min-width: 680px) {
     nav {
       width: 97%;
       height: 50px;
@@ -67,6 +71,8 @@ const INTERNLINKS = [
     text-transform: uppercase;
     padding-top: 0.75em;
     padding-bottom: 0.75em;
+    margin-left: 0.15rem;
+    margin-right: 0.15rem;
   }
 
   .link:hover,
@@ -91,6 +97,8 @@ const INTERNLINKS = [
   .socials {
     display: flex;
     gap: 0.2em;
+    margin-right: 0.1rem;
+    margin-left: 0.1rem;
     margin-left: auto;
   }
 
@@ -107,11 +115,11 @@ const INTERNLINKS = [
   }
   .socialIcon:hover,
   .socialIcon:focus {
-    transform: scale(1.2);
+    transform: scale(1.25);
   }
 
   .socialIcon:active {
-    transform: scale(.8);
+    transform: scale(0.8);
   }
 
   /*.socialIcon:hover {
