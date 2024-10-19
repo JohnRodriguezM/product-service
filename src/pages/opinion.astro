@@ -3,15 +3,12 @@ import MainHead from "../components/MainHead.astro";
 import Footer from "../components/Footer.astro";
 import Nav from "../components/Nav.astro";
 
-/*import { FormOpinion } from "../components/FormOpinion/FormOpinion";*/
-
 import { FormLoad } from "../components/FormOpinion/FormLoad";
 ---
 
 <html lang="en">
   <head>
-    <MainHead title="Negocio | Opinión" description="Opinión sobre nuestro producto"
-    />
+    <MainHead title="Miss Arepas | Opina" description="Opina sobre nosotros" />
     <style>
       .heroImg {
         max-height: 24rem;
@@ -40,19 +37,7 @@ import { FormLoad } from "../components/FormOpinion/FormLoad";
   </head>
   <body>
     <Nav />
-    
     <FormLoad client:only="react" />
-    
     <Footer />
   </body>
-  </html>
-  
-  
-      <!--poner una img relacionada con la opinión de los usarios 
-        <div class="heroImg">
-          <img
-            width="1400"
-            height="350"
-            src="https://images.unsplash.com/photo-1498771251419-a1f4fbecd022?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-          />
-        </div> s-->
+</html>
